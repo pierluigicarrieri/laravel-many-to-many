@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 //Uses 'Project' model
 use App\Models\Project;
-//Uses 'Project' model
+//Uses 'Type' model
 use App\Models\Type;
+//Uses 'Technology' model
+use App\Models\Technology;
 //Uses 'ProjectStoreRequest' request
 use App\Http\Requests\ProjectStoreRequest;
-
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -25,8 +26,10 @@ class ProjectController extends Controller
 
         $types = Type::all();
 
+        $technologies = Technology::all();
+
         //Returns 'create' view
-        return view('admin.projects.create', ['types' => $types]);
+        return view('admin.projects.create', ['types' => $types, 'technologies' => $technologies]);
     }
 
 
@@ -69,6 +72,12 @@ class ProjectController extends Controller
         //Creates a new '$project' entry using '$data' validated from '$request' (see above)
         $project = Project::create($data);
 
+        //Invokes the 'attach' method of the 'technologies' istance/relation, puts selected 'technologies' into '$data' array
+        //If construct to handle no choice by user
+        if (key_exists('technologies', $data)) {
+            $project->technologies()->attach($data['technologies']);
+        }
+        
         //Redirects to 'show' route with the id of newly created '$project' entry as second argument of 'route' function
         return redirect()->route('admin.projects.show', $project->slug);
     }
@@ -107,8 +116,10 @@ class ProjectController extends Controller
 
         $types = Type::all();
 
+        $technologies = Technology::all();
+
         //Returns 'show' view with 'project' as second argument, from '$project'
-        return view('admin.projects.edit', ['project'=>$project], ['types'=>$types]);
+        return view('admin.projects.edit', ['project'=>$project, 'types'=>$types, 'technologies' => $technologies]);
 
     }
 
@@ -162,6 +173,12 @@ class ProjectController extends Controller
         //Assigns '$image_path' value to 'image' property of '$data' array
         $data['image'] = $image_path;
 
+        //Invokes the 'sync' method of the 'technologies' istance/relation, puts selected 'technologies' into '$data' array
+        //If construct to handle no choice by user
+        if (key_exists('technologies', $data)) {
+            $project->technologies()->sync($data['technologies']);
+        }
+
         //Updates '$project' using '$data'
         $project->update($data);
 
@@ -171,7 +188,7 @@ class ProjectController extends Controller
     }
 
 
-
+    //'DESTROY' FUNCTION
     public function destroy($slug) {
 
         //Fetches an entry from 'Project' table trough 'Project' model using the '$slug' as finder for a 'where' query ('findOrFail()' works only with id's)
@@ -182,6 +199,8 @@ class ProjectController extends Controller
 
             Storage::delete($project->image);
         }
+
+        $project->technologies()->detach();
 
         //Deletes '$project'
         $project->delete();

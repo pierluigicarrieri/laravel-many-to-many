@@ -16,7 +16,6 @@ class Project extends Model
         'description',
         'image',
         'publication_date',
-        'technologies_used',
         'git_link'
     ];
 

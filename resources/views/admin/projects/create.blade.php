@@ -55,9 +55,14 @@
                                 <input type="date" class="form-control" name="publication_date">
                             </div>
     
+                            <label for="" class="form-label mb-3">Technologies used</label>
                             <div class="mb-3">
-                                <label for="" class="form-label">Technologies Used</label>
-                                <input type="text" class="form-control" name="technologies_used">
+                                @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="technologies[]" type="checkbox" id="{{$technology->slug}}" value="{{$technology->id}}">
+                                    <label class="form-check-label" for="{{$technology->slug}}">{{$technology->name}}</label>
+                                </div>
+                                @endforeach
                             </div>
     
                             <div class="mb-3">
