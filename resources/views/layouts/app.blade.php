@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('https://laravel.com/') }}">
-                    <h3 id="powered-by" class="pt-1 pe-2">Powered by</h3>
+                    <h3 id="powered-by" class="pt-1 pe-2">Powered by Bubu</h3>
                     <div class="logo_laravel text-danger">
                         <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 150px">
                             <g clip-path="url(#clip0)" fill="#EF3B2D">
