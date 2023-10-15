@@ -200,6 +200,7 @@ class ProjectController extends Controller
             Storage::delete($project->image);
         }
 
+        //Deletes relations
         $project->technologies()->detach();
 
         //Deletes '$project'

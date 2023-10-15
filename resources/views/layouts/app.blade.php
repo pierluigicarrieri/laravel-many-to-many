@@ -22,8 +22,6 @@
 <body class="vh-100 d-flex">
     <div id="app" class="d-flex flex-column flex-grow-1">
 
-        <div class="flex-grow-0">
-
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('https://laravel.com/') }}">
@@ -88,8 +86,6 @@
                 </div>
             </div>
         </nav>
-
-        </div>
 
         <main class="d-flex flex-column flex-grow-1">
             @yield('content')
